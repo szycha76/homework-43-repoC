@@ -37,7 +37,6 @@ def guess_separator(sample):
             guesses[guess] += 1
         except KeyError:
             guesses[guess] = 1
-        # print(f"{pos}, {guess}, {guesses}, {line}")
 
     if len(guesses) == 1:
         G = list(guesses.keys())[0]
@@ -95,7 +94,7 @@ def to_csv(log, sep):
         f.write("\n".join(csv))
 
 
-def main():
+def main():  # pragma: no-cover
     try:
         with open(sys.argv[1], "r") as f:
             log = ignore_non_standard_lines(f)
@@ -110,13 +109,9 @@ def main():
         sys.exit(1)
 
     sep = guess_separator(log[:25])
-    ### DEBUG:
-    # sep = ":"
-    # log = log[:4]
     to_csv(log, sep)
 
 
-print(sys.argv)
 main()
 
 # vim: et sw=4 ts=4 relativenumber number
