@@ -37,7 +37,7 @@ def guess_separator(sample):
             guesses[guess] += 1
         except KeyError:
             guesses[guess] = 1
-        print(f"{pos}, {guess}, {guesses}, {line}")
+        # print(f"{pos}, {guess}, {guesses}, {line}")
 
     if len(guesses) == 1:
         G = list(guesses.keys())[0]
@@ -56,9 +56,9 @@ def confirm_separator(G, sample):
     for line in l:
         A = line.split(G, 2)
         try:
-            max_lines[A[0]] = max(max_lines[A[0]], A[1])
+            max_lines[A[0]] = max(int(max_lines[A[0]]), int(A[1]))
         except KeyError:
-            max_lines[A[0]] = A[1]
+            max_lines[A[0]] = int(A[1])
 
     for f in max_lines:
         try:
@@ -87,7 +87,7 @@ def ignore_non_standard_lines(f):
 
 def to_csv(log, sep):
     csv = ['"line","file","message"'] + [
-        f'"{z[1]}","{z[0]}","{z[2].removeprefix(PREFIX)}"'
+        f'{z[1]},"{z[0].removeprefix(os.getcwd()+os.sep)}","{z[2].removeprefix(PREFIX)}"'
         for z in [x.split(sep, 2) for x in log]
     ]
 
@@ -111,8 +111,8 @@ def main():
 
     sep = guess_separator(log[:25])
     ### DEBUG:
-    sep = ":"
-    log = log[:4]
+    # sep = ":"
+    # log = log[:4]
     to_csv(log, sep)
 
 
