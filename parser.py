@@ -109,7 +109,11 @@ def main():  # pragma: no-cover
         sys.exit(1)
 
     sep = guess_separator(log[:25])
-    to_csv(log, sep)
+    if sep:
+        to_csv(log, sep)
+    else:
+        print("I couldn't figure out what a separator character was used.")
+        sys.exit(11)
 
 
 main()
